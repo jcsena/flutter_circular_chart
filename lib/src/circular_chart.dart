@@ -1,5 +1,4 @@
 import 'package:flutter/animation.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart_two/src/animated_circular_chart.dart';
 import 'package:flutter_circular_chart_two/src/entry.dart';
@@ -17,32 +16,33 @@ class CircularChart {
 
   final List<CircularChartStack> stacks;
   final CircularChartType chartType;
-  final SegmentEdgeStyle edgeStyle;
+  final SegmentEdgeStyle? edgeStyle;
 
-  factory CircularChart.empty({@required CircularChartType chartType}) {
+  factory CircularChart.empty({required CircularChartType chartType}) {
     return CircularChart(<CircularChartStack>[], chartType);
   }
 
   factory CircularChart.fromData({
-    @required Size size,
-    @required List<CircularStackEntry> data,
-    @required CircularChartType chartType,
-    @required bool percentageValues,
-    @required double startAngle,
-    Map<String, int> stackRanks,
-    Map<String, int> entryRanks,
-    double holeRadius,
-    SegmentEdgeStyle edgeStyle,
+    required Size size,
+    required List<CircularStackEntry> data,
+    required CircularChartType chartType,
+    required bool percentageValues,
+    required double startAngle,
+    Map<String?, int>? stackRanks,
+    Map<String?, int>? entryRanks,
+    double? holeRadius,
+    SegmentEdgeStyle? edgeStyle,
   }) {
     final double _holeRadius = holeRadius ?? size.width / (2 + data.length);
-    final double stackDistance = (size.width / 2 - _holeRadius) / (2 + data.length);
+    final double stackDistance =
+        (size.width / 2 - _holeRadius) / (2 + data.length);
     final double stackWidth = stackDistance * _kStackWidthFraction;
     final double startRadius = stackDistance + _holeRadius;
 
     List<CircularChartStack> stacks = List<CircularChartStack>.generate(
       data.length,
       (i) => CircularChartStack.fromData(
-        stackRanks[data[i].rankKey] ?? i,
+        stackRanks![data[i].rankKey] ?? i,
         data[i].entries,
         entryRanks,
         percentageValues,
@@ -66,7 +66,7 @@ class CircularChartTween extends Tween<CircularChart> {
   @override
   CircularChart lerp(double t) => CircularChart(
         _stacksTween.lerp(t),
-        begin.chartType,
-        edgeStyle: end.edgeStyle,
+        begin!.chartType,
+        edgeStyle: end!.edgeStyle,
       );
 }
