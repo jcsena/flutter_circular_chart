@@ -214,7 +214,7 @@ class AnimatedCircularChartState extends State<AnimatedCircularChart>
   void _updateLabelPainter() {
     if (widget.holeLabel != null) {
       TextStyle? _labelStyle =
-          widget.labelStyle ?? Theme.of(context).textTheme.bodyText1;
+          widget.labelStyle ?? Theme.of(context).textTheme.bodyLarge;
       _labelPainter
         ..text = TextSpan(style: _labelStyle, text: widget.holeLabel)
         ..textDirection = Directionality.of(context)
